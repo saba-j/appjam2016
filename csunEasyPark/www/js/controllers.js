@@ -41,11 +41,13 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PaymentOptionsCtrl', function($scope) {
+.controller('PaymentOptionsCtrl', function($scope, Chats) {
   $scope.registeredCards = [
     { type: 'Visa', lastFourDigits:'1234',id: 1 },
     { type: 'Master Card', lastFourDigits:'4321',id: 2 },
   ];
+  var val = Chats.all();
+  console.log(val);
 })
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
