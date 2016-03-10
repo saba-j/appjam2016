@@ -41,6 +41,12 @@ angular.module('starter.controllers', [])
   };
 })
 
+.controller('PaymentOptionsCtrl', function($scope) {
+  $scope.registeredCards = [
+    { type: 'Visa', lastFourDigits:'1234',id: 1 },
+    { type: 'Master Card', lastFourDigits:'4321',id: 2 },
+  ];
+})
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
     { title: 'Reggae', id: 1 },

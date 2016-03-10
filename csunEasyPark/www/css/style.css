@@ -1,1 +1,32 @@
 /* Empty. Add your own CSS if you like */
+.bar.bar-stable{
+	border-color: #E74A37;
+	background-color: #D00D2D;
+	background-image: linear-gradient(0deg, #D00D2D, #E74A37 50%, transparent 50%);
+	color: #fff; 
+}
+
+.bar.bar-stable .title {
+	color: #fff; 
+}
+
+.bar.bar-stable.bar-footer {
+	background-image: linear-gradient(180deg, #D00D2D, #E74A37 50%, transparent 50%); 
+}
+
+.bar-stable .button.button-clear {
+    color: #fff; 
+}
+
+.badge.badge-custom {
+    color: #444;
+}
+
+ .pane,
+.view {
+  background-color: #FAF8FF;
+   }
+
+  hr{
+  	 border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }

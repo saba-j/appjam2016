@@ -1,0 +1,15 @@
+<ion-view view-title="Payment Options">
+<ion-content>
+<ion-list>
+
+<ion-item class="item-remove-animate" ng-repeat="card in registeredCards track by card.id" href="#/app/card/{{card.id}}">
+<i class="icon ion-card" style="margin-right:0.5em"></i>{{card.type}}
+	<span class="badge badge-custom">{{card.lastFourDigits}}</span>
+	        <ion-option-button class="button-assertive">
+          Delete
+        </ion-option-button>
+</ion-item>
+
+</ion-list>
+</ion-content>
+</ion-view>
