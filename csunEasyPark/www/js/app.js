@@ -3,62 +3,52 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
 
+      // Don't remove this line unless you know what you are doing. It stops the viewport
+      // from snapping when text inputs are focused. Ionic handles this internally for
+      // a much nicer keyboard experience.
+      cordova.plugins.Keyboard.disableScroll(true);
     }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
+    if(window.StatusBar) {
       StatusBar.styleDefault();
     }
   });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+  })
+  .config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
 
     .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-  })
-    .state('app.payment_options', {
-    url: '/payment_options',
-        views: {
-      'menuContent': {
-        templateUrl: 'templates/payment_options.html',
-        controller: 'PaymentOptionsCtrl'
+      url: '/app',
+      abstract: true,
+      templateUrl: 'templates/menu.html',
+      controller: 'AppCtrl'
+    })
+    .state('app.home', {
+      url: '/home',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/home.html'
+        }
       }
-    }
-    
-  })
-  .state('app.card', {
-    url: '/card',
+
+    })
+      .state('app.vehicle', {
+    url: '/vehicle',
         views: {
       'menuContent': {
-        templateUrl: 'templates/card.html'
-      }
-    }
-    
-  })
-    .state('app.dashbord', {
-    url: '/dashbord',
-        views: {
-      'menuContent': {
-        templateUrl: 'templates/dashbord.html'
+        templateUrl: 'templates/vehicle/list.html',
+        controller: 'vehicleListCtrl'
       }
     }
     
   });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/dashbord');
-});
+    $urlRouterProvider.otherwise('/app/home');
+  });

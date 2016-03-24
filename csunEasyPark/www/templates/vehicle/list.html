@@ -1,0 +1,18 @@
+<ion-view view-title="Vehicle Info Center" enable-menu-with-back-views="false">
+<ion-content>
+<div class="list">
+
+ <ion-list>
+ <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="vehicle in vehicles" type="item-text-wrap" href="#/app/vehicle/{{vehicle.id}}">
+ <img ng-src="{{vehicle.img}}" style="border:1px solid #E9EEF1; background-color:#F2F2F2; box-shadow: 5px 5px 5px #D2D7D9;">
+ <h2>{{vehicle.title}}</h2>
+ <p>{{vehicle.year}}</p>
+ <span class="badge badge-light">{{vehicle.plate}}</span>
+ <ion-option-button class="button-assertive" ng-click="remove(chat)">
+ Delete
+</ion-option-button>
+</ion-item>
+</ion-list>
+</div>
+</ion-content>
+</ion-view>
