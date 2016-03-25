@@ -21,34 +21,55 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
   });
+})
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+
+  .state('app', {
+    url: '/app',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
   })
-  .config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-
-    .state('app', {
-      url: '/app',
-      abstract: true,
-      templateUrl: 'templates/menu.html',
-      controller: 'AppCtrl'
-    })
-    .state('app.home', {
-      url: '/home',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/home.html'
-        }
+  .state('app.home', {
+    url: '/home',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/home.html',
+        controller:'homeCtrl'
       }
+    }
 
-    })
-      .state('app.vehicle', {
+  })
+  .state('app.vehicle', {
     url: '/vehicle',
-        views: {
+    views: {
       'menuContent': {
         templateUrl: 'templates/vehicle/list.html',
         controller: 'vehicleListCtrl'
       }
     }
     
-  });
-    $urlRouterProvider.otherwise('/app/home');
-  });
+  })
+  .state('app.vehicle_register_insertvin', {
+    url: '/vehicle/register/insertvin',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/vehicle/insertvin.html',
+        controller: 'vehicleListCtrl'
+      }
+    }
+    
+  })
+    .state('app.vehicle_register2', {
+    url: '/vehicle/register/loockupvin/:vin',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/vehicle/register2.html',
+        controller: 'vehicleListCtrl'
+      }
+    }
+    
+  })
+  $urlRouterProvider.otherwise('/app/home');
+});

@@ -6,9 +6,10 @@ angular.module('starter.services', [])
   // Some fake testing data
   //http://www.iconsdb.com/soylent-red-icons/chevrolet-icon.html
   var vehicles = [    
-  { title: 'Chevrolet Cavalier',plate:'AB12CD5', img:'img/chevrolet-256.png',year:'2003',id: 1 },
-  { title: 'Ford Mustang',plate:'TL78RC6',img:'img/ford-256.png', year:'2009',id: 2 },
-  { title: 'Toyota Camry',plate:'UG90FN1',img:'img/toyota-256.png', year:'2015',id: 3 }
+  { make: 'Chevrolet',vin:"1234567890", model: 'Cavalier',plate:'AB12CD5', img:'img/path936.png',year:'2003',id: 0 },
+  { make: 'Toyota', vin:"1234567890",model:'Camry',plate:'UG90FN1',img:'img/path937.png', year:'2015',id: 1 },
+  { make: 'Ford', vin:"1234567890",model:'Mustang',plate:'TL78RC6',img:'img/ford-256.png', year:'2009',id: 2 }
+  
   ];
 
   return {
@@ -25,6 +26,12 @@ angular.module('starter.services', [])
   			}
   		}
   		return null;
-  	}
-  };
+  	}, 
+  	add: function(vehicleInfo){
+  		console.log(vehicleInfo);
+  		vehicles.push(vehicleInfo);
+  		console.log(vehicles);
+  		return true;
+  	},
+  }
 });
