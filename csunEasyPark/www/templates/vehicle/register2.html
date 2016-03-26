@@ -1,0 +1,32 @@
+<ion-view view-title="Save Car">
+<ion-content padding="true">
+<div class="level2" ng-hide="registrationLevel2hide">
+	<div class="list">
+		<div class="item item-icon-left item-icon-right">
+			<i class="icon ion-ribbon-b" style="color:#D1D1D1;"></i>
+			Car Make
+			<span class="badge badge-light">{{carRegistrationInfo.make}}</span>
+		</div>
+		<div class="item item-icon-left item-icon-right">
+			<i class="icon ion-ribbon-b" style="color:#D1D1D1;"></i>
+			Car Model
+			<span class="badge badge-light">{{carRegistrationInfo.model}}</span>
+		</div>
+		<div class="item item-icon-left item-icon-right">
+			<i class="icon ion-ribbon-b" style="color:#D1D1D1;"></i>
+			Year
+			<span class="badge badge-light">{{carRegistrationInfo.year}}</span>
+		</div>
+		<form name="newCar" ng-submit="submit_newCar()">
+			<label class="item item-input" style="padding-right: 1em">
+				<span class="input-label">Plate  #</span>
+				<input type="text" ng-model="carRegistrationInfo.plate" style="border:1px solid #D1D1D1;" required="">
+			</label>
+			<button type="submit" class="button button-full button-balanced" ng-disabled="newCar.$invalid">
+				<span class="icon ion-paper-airplane"></span> Submit
+			</button>
+		</form>
+	</div>
+</div>
+</ion-content>
+</ion-view>
