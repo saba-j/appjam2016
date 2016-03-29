@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','nvd3'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','angular-svg-round-progressbar'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -61,12 +61,42 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     }
     
   })
-    .state('app.vehicle_register2', {
+  .state('app.vehicle_register2', {
     url: '/vehicle/register/loockupvin/:vin',
     views: {
       'menuContent': {
         templateUrl: 'templates/vehicle/register2.html',
         controller: 'vehicleListCtrl'
+      }
+    }
+    
+  })
+  .state('app.payment', {
+    url: '/payment',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/payment/paymentlist.html',
+        controller: 'paymentListCtrl'
+      }
+    }
+    
+  })
+  .state('app.map', {
+    url: '/map',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/map/googlemap.html'
+      }
+    }
+    
+  })
+
+  .state('app.parkinglist', {
+    url: '/parkinglist',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/parking/parkinglist.html',
+        controller: 'parkingListCtrl'
       }
     }
     

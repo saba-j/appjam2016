@@ -7,7 +7,6 @@
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  <link href="lib/nvd3/build/nv.d3.css" rel="stylesheet"> 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
   -->
@@ -23,9 +22,7 @@
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
 
-  <script src="lib/d3/d3.js"></script>  
-  <script src="lib/nvd3/build/nv.d3.min.js"></script>  
-  <script src="lib/angular-nvd3/dist/angular-nvd3.min.js"></script>  
+<script src="lib/angular-svg-round-progressbar/build/roundProgress.min.js"></script>
   <style>
     .bar.bar-assertive {
       background-color: #D00D2D;
@@ -43,6 +40,65 @@
       opacity:0;
     }
   </style>
+  <style>
+
+  .progress-wrapper{
+    position: relative;
+    margin-top:1em;
+    margin-bottom:1em;
+    margin-left: 2em;
+    margin-right: 2em;
+    font-size: 40px;
+  }
+  .progress {
+    position: absolute;
+    color: #D00D2D;
+    font-weight: bold;
+    line-height: 1;
+
+  }
+</style>
+<style>
+  .info-box {
+    display: block;
+    min-height: 90px;
+    background: #FFF none repeat scroll 0% 0%;
+    width: 100%;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+  }
+  .bg-aqua {
+    background-color: #00C0EF !important;
+  }
+  .bg-yellow {
+    background-color: #F39C12 !important;
+  }
+  .info-box-icon {
+    border-radius: 2px 0px 0px 2px;
+    display: block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    font-size: 45px;
+    line-height: 90px;
+    background: rgba(0, 0, 0, 0.2) none repeat scroll 0% 0%;
+  }
+
+  .info-box-content {
+    padding: 5px 10px;
+    margin-left: 90px;
+  }
+  .info-box-text {
+    text-transform: uppercase;
+  }
+  .info-box-number {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+  }
+</style>
 </head>
 <body ng-app="starter">
   <ion-nav-view></ion-nav-view>

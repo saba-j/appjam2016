@@ -1,0 +1,24 @@
+<ion-view view-title="Payment Center" enable-menu-with-back-views="false">
+<ion-content padding="false">
+<div class="list">
+ <ion-list>
+ <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="payment in payments track by payment.id" type="item-text-wrap" href="#/app/payment/">
+ <img ng-src="{{payment.img}}" style="border-radius: 0; max-width: 60">
+ <h2>{{payment.type}}</h2>
+ <p>{{payment.exp}}</p>
+ <span class="badge badge-light">{{payment.lastFour}}</span>
+ <ion-option-button class="button-assertive" ng-click="remove(payment)">
+ Delete
+</ion-option-button>
+</ion-item>
+</ion-list>
+</div>
+<div style="margin:1em">
+<form name="registerNewPayment" action="#/app/payment/register/">
+<button type="submit" class="button button-block button-balanced">
+  <span class="icon ion-plus-round"></span> Register New Payment
+</button>
+</form>
+</div>
+</ion-content>
+</ion-view>

@@ -1,53 +1,48 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-	
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$ionicHistory,$state) {
+    $scope.gotohome = function(){
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('app.home');
+    }
 })
 .controller('homeCtrl', function($scope,$timeout,$ionicHistory) {
 	$ionicHistory.nextViewOptions({
 		disableBack: true
 	});
 
-	$scope.vm = {
-		options : {  
-			chart: {
-    type: 'pieChart',
-    height: 500,
-    x: function(d){return d.key;},
-    y: function(d){return d.y;},
-    showLabels: false,
-    duration: 500,
-    labelThreshold: 0.01,
-    labelSunbeamLayout: true,
-    width: 320,
-    title: '80 minute',
-    donut: true,
-    tooltips: false,
-    legend: {
-      margin: {
-        top: 5,
-        right: 0,
-        bottom: 5,
-        left: 0
-      }
-    }
-  }
-		},
-		data : [  
-		{
-			key: "One",
-			y: 5
-		},
-		{
-			key: "Two",
-			y: 2
-		},
+    $scope.current =        27;
+    $scope.max =            50;
+    $scope.offset =         0;
+    $scope.timerCurrent =   0;
+    $scope.uploadCurrent =  0;
+    $scope.stroke =         15;
+    $scope.radius =         125;
+    $scope.isSemi =         false;
+    $scope.rounded =        false;
+    $scope.responsive =     false;
+    $scope.clockwise =      true;
+    $scope.currentColor =   '#45ccce';
+    $scope.bgColor =        '#eaeaea';
+    $scope.duration =       800;
+    $scope.currentAnimation = 'easeOutCubic';
+    $scope.animationDelay = 0;
 
-		]
+    $scope.getStyle = function(){
+        var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
 
-	}
-
-
+        return {
+            'top': $scope.isSemi ? 'auto' : '50%',
+            'bottom': $scope.isSemi ? '5%' : 'auto',
+            'left': '50%',
+            'transform': transform,
+            '-moz-transform': transform,
+            '-webkit-transform': transform,
+            'font-size': $scope.radius/3.5 + 'px'
+        };
+    };
 })
 .controller('vehicleListCtrl', function($scope,$ionicPopup,$timeout,$state,$stateParams,$ionicHistory,VehicleService) {
 
@@ -109,3 +104,16 @@ angular.module('starter.controllers', [])
      }
 
  })
+
+.controller('paymentListCtrl', function($scope,$ionicPopup,$timeout,$state,$stateParams,$ionicHistory,PaymentService) {
+    $scope.payments = PaymentService.all();
+    $scope.remove = function(payment) {
+        PaymentService.remove(payment);
+    }
+})
+.controller('parkingListCtrl', function($scope,$ionicPopup,$timeout,$state,$stateParams,$ionicHistory,ParkingService) {
+    $scope.parkings = ParkingService.all();
+    $scope.remove = function(parking) {
+        ParkingService.remove(parking);
+    }
+})
