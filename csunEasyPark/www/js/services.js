@@ -66,236 +66,49 @@ angular.module('starter.services', [])
     },
   }
 })
-.factory('ParkingService', function() {
+.factory('ParkingService', ['$http', function($http) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
   //http://www.iconsdb.com/soylent-red-icons/chevrolet-icon.html
-  var parkings = [    
-  {
-    'name': 'B1',
-    'id':0,
-    'policy':'all',
-    'round-progress':'', 
-    'max':480, 
-    'current':38,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-  {
-    'name': 'B2',
-    'id':1,
-    'policy':'all',
-    'round-progress':'', 
-    'max':513, 
-    'current':470,
-    'color':'#e42112',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-    {
-    'name': 'B3',
-    'id':2,
-    'policy':'all',
-    'round-progress':'', 
-    'max':2063, 
-    'current':990,
-    'color':'#FFDC00',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-      {
-    'name': 'B4',
-    'id':3,
-    'policy':'faculty only',
-    'round-progress':'', 
-    'max':445, 
-    'current':150,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-        {
-    'name': 'B5',
-    'id':4,
-    'policy':'all',
-    'round-progress':'', 
-    'max':1361, 
-    'current':301,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-          {
-    'name': 'B6',
-    'id':5,
-    'policy':'all',
-    'round-progress':'', 
-    'max':734, 
-    'current':734,
-    'color':'#e42112',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-            {
-    'name': 'D6',
-    'id':6,
-    'policy':'all',
-    'round-progress':'', 
-    'max':278, 
-    'current':75,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-              {
-    'name': 'E6',
-    'id':7,
-    'policy':'all',
-    'round-progress':'', 
-    'max':448, 
-    'current':15,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-                {
-    'name': 'F10',
-    'id':8,
-    'policy':'all',
-    'round-progress':'', 
-    'max':890, 
-    'current':350,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-                  {
-    'name': 'G3',
-    'id':9,
-    'policy':'all',
-    'round-progress':'', 
-    'max':979, 
-    'current':500,
-    'color':'#FFDC00',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-                    {
-    'name': 'G4',
-    'id':10,
-    'policy':'all',
-    'round-progress':'', 
-    'max':1132, 
-    'current':193,
-    'color':'#45BF55',
-    'bgcolor':'#eaeaea',
-    'radius':150,
-    'stroke':75,
-    'semi':false,
-    'rounded':false,
-    'clockwise':true,
-    'responsive':true,
-    'duration':800,
-    'animation':'easeInOutQuart',
-    'animation-delay':100,
-    'on-render':'showPreciseCurrent'
-  },
-  ];
+  var parkings = [];
+
 
   return {
     all: function() {
+      console.log("all was called");
+      $http({
+        method: 'POST',
+        data:{'id':6},
+        dataType : 'application/x-www-form-urlencoded',
+        url: 'http://umbernet.com/get_parking_update.php'
+      }).then(function successCallback(response) {
+        console.log(response);
+
+        for(i=0; i < response.data.length; i++){
+          var temp_p = {
+            'name': response.data[i].parking_name,
+            'id':response.data[i].id*1,
+            'policy':response.data[i].policy,
+            'max':(response.data[i].max*1), 
+            'current':(response.data[i].current*1),
+          };
+          if(temp_p.id !== 1){
+            temp_p.current = Math.floor((Math.random() * temp_p.max)); 
+          }
+          parkings.push(temp_p);
+        
+        }
+
+     
+
+      }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  }) .finally(function() {
+       // Stop the ion-refresher from spinning
+       //$scope.$broadcast('scroll.refreshComplete');
+     });
       return parkings;
     },
     remove: function(parking) {
@@ -316,4 +129,4 @@ angular.module('starter.services', [])
       return true;
     },
   }
-})
+}])

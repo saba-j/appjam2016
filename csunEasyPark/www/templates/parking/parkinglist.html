@@ -1,39 +1,18 @@
 <ion-view view-title="Parking Center" enable-menu-with-back-views="false">
-	<ion-content padding="false">
-		<div class="list">
-			<ion-list>
-				<ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="parking in parkings track by parking.id" type="item-text-wrap" href="#/app/parking/" style="font-size:2.5em; color:#000">
-					<i class="icon ion-ios-location" style="font-size:1.5em; left:0; padding-right:5%; padding-left:5%; background-color:{{parking.color}}; color:#FFF;"></i>
-					<h2 style="position: absolute; top:30%; left:20%; font-size:1em">{{parking.name}}</h2>
-					<h2 style="position: absolute; top:60%; left:20%; font-size:0.5em">Max: {{parking.max}}</h2>
-					<h2 style="position: absolute; top:80%; left:20%; font-size:0.25em">Open to {{parking.policy}}</h2>
-					<div style="width:3em; float:right; position: relative;">
-						<span style="position: absolute; display: block; width: 100%; color: black; top:40%;left:35%; font-size:0.55em">{{parking.current}}</span>
+<ion-content padding="true">
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+<div class="list">
+	<ion-list>
+	<ion-item class="item-remove-animate item-icon-right" ng-repeat="parking in parkings track by $index" type="item-text-wrap" href="#/app/parking/">
+	    <just-gage id="{{parking.id}}" class="someClass" min=0 max=parking.max value=parking.current title="Parking {{parking.name}}"></just-gage>
+	<ion-option-button class="button-assertive" ng-click="remove(parking)">
+	Delete
+</ion-option-button>
+</ion-list>
+</div>
 
-						<div
-							round-progress=""
-							max=parking.max
-							current=parking.current
-							color="{{parking.color}}"
-							bgcolor="{{parking.bgcolor}}"
-							radius="{{parking.radius}}"
-							stroke="{{parking.stroke}}"
-							semi=parking.semi
-							rounded=parking.rounded
-							clockwise=parking.clockwise
-							responsive=parking.responsive
-							duration=parking.duration
-							animation=parking.animation
-							animation-delay="{{parking.animation-delay}}"
-							on-render="parking.on-render"
-							>
-						</div>
-					</div>
-					<ion-option-button class="button-assertive" ng-click="remove(parking)">
-						Delete
-					</ion-option-button>
-				</ion-list>
-			</div>
-
-		</ion-content>
-	</ion-view>
+</ion-content>
+</ion-view>

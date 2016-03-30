@@ -116,4 +116,9 @@ angular.module('starter.controllers', [])
     $scope.remove = function(parking) {
         ParkingService.remove(parking);
     }
+
+    $scope.doRefresh = function(){
+       var temp_parkinglist = ParkingService.all();
+       $scope.$broadcast('scroll.refreshComplete');
+    }
 })
