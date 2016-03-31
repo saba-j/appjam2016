@@ -2,50 +2,34 @@
 <ion-content>
 
 <div class="progress-wrapper">
-  <!--<div class="progress ng-cloak" style="top: 50%; bottom: auto; left: 50%; transform: translateY(-50%) translateX(-50%); font-size: 0.5em;">12 min</div>
-  <div
-  round-progress=""
-  max="100"
-  current="35"
-  color="#00C0EF"
-  bgcolor="#eaeaea"
-  radius="150"
-  stroke="75"
-  semi="false"
-  rounded="false"
-  clockwise="true"
-  responsive="true"
-  duration="800"
-  animation="easeInOutQuart"
-  animation-delay="100"
-  on-render="showPreciseCurrent"
-  >
-</div>-->
+<just-gage id="ABCD1" class="someClass" min=reg.start max=reg.end value=reg.current title="Time left"></just-gage>
 </div>
 <div class="list card">
-
   <a href="#/app/parkinglist" class="item item-icon-left">
     <i class="icon ion-ios-location"></i>
     Parking Status
   </a>
 
-  <a href="#" class="item item-icon-left">
-    <i class="icon ion-card"></i>
-    Add More time
+  <a href="#/app/scanqr" class="item item-icon-left">
+    <i class="icon ion-android-car"></i>
+    Register parking
   </a>
 
-
-  <a href="#" class="item item-icon-left">
-    <i class="icon ion-model-s"></i>
-    Scan QR code
+  <a href="#/app/scanqr/moretime" class="item item-icon-left">
+    <i class="icon ion-clock"></i>
+    Add More time
   </a>
 
 </div>
 
-
-
-
-
+</ion-content>
 
 </ion-content>
+    <ion-footer-bar align-title="left" class="bar-assertive">
+      <div class="button-bar">
+        <a class="button button-icon icon ion-android-car" ng-href="#/app/scanqr"></a>
+        <a class="button button-icon icon ion-loop" ng-href="#/app/parkinglist"></a>
+        <a class="button button-icon icon ion-map" ng-href="#/app/map"></a>
+      </div>
+    </ion-footer-bar>
 </ion-view>

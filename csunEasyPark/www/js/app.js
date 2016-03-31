@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngJustGage'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngJustGage','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -85,7 +85,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     url: '/map',
     views: {
       'menuContent': {
-        templateUrl: 'templates/map/googlemap.html'
+        templateUrl: 'templates/map/googlemap.html',
+        controller: 'MapCtrl'
       }
     }
     
@@ -97,6 +98,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       'menuContent': {
         templateUrl: 'templates/parking/parkinglist.html',
         controller: 'parkingListCtrl'
+      }
+    }
+    
+  })
+  .state('app.scanqr', {
+    url: '/scanqr',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/register/scanqr.html',
+        controller: 'registerCtrl'
+      }
+    }
+    
+  })
+  .state('app.scanqrMoretime', {
+    url: '/scanqr/moretime',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/register/scanqr.html',
+        controller: 'registerCtrl'
       }
     }
     

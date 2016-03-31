@@ -1,0 +1,79 @@
+<ion-view view-title="Parking Center" enable-menu-with-back-views="false">
+<ion-content padding="true">
+<div class="level0" ng-show="level_0">
+<h3>Enter Spot ID</h3>
+<div class="card">
+
+	<div class="list list-inset">
+  <label class="item item-input">
+    <input type="text" placeholder="Spot ID" ng-model="spot_id">
+  </label>
+</div>
+
+	<div class="item">
+		<button class="button button-block button-positive" ng-click="scanNow()">
+			Submit
+		</button>
+	</div>
+</div>
+</div>
+
+<div class="level1" ng-show="level_1">
+	<h3>Select Car</h3>
+	<ion-list>
+	<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="vehicle in vehicles track by vehicle.id" type="item-text-wrap" ng-click="chooseCar(vehicle)">
+	<img ng-src="{{vehicle.img}}" style="border-radius: 0">
+	<h2>{{vehicle.make}} {{vehicle.model}}</h2>
+	<p>{{vehicle.year}}</p>
+	<span class="badge badge-light">{{vehicle.plate}}</span>
+	<ion-option-button class="button-assertive" ng-click="remove(vehicle)">
+	Delete
+</ion-option-button>
+</ion-item>
+</ion-list>
+
+</div>
+
+<div class="level2" ng-show="level_2">
+	<div class="list">
+		<h3>Select Payment</h3>
+		<ion-list>
+		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="payment in payments track by payment.id" type="item-text-wrap" ng-click="choosePayment(payment)">
+		<img ng-src="{{payment.img}}" style="border-radius: 0; max-width: 60">
+		<h2>{{payment.type}}</h2>
+		<p>{{payment.exp}}</p>
+		<span class="badge badge-light">{{payment.lastFour}}</span>
+		<ion-option-button class="button-assertive" ng-click="remove(payment)">
+		Delete
+	</ion-option-button>
+</ion-item>
+</ion-list>
+</div>
+</div>
+
+<div class="level3" ng-show="level_3">
+		<h3>Select Duration</h3>
+<div class="card">
+<div class="item" style="text-align: center">
+	<h1>{{selectedDuration}} hours</h1>
+	</div>
+</div>
+
+	<div class="list">
+		<div class="item range">
+			<i class="icon ion-ios-timer-outline"></i>
+			<input type="range" name="duration" step="1" min="2" max="24" value="{{selectedDuration}}" ng-model="selectedDuration">
+			<i class="icon ion-ios-timer"></i>
+		</div>
+		
+	</div>
+
+	<div class="item">
+		<button class="button button-block button-positive" ng-click="finishRegister(selectedDuration)">
+			Submit
+		</button>
+	</div>
+</div>
+
+</ion-content>
+</ion-view>

@@ -8,41 +8,14 @@ angular.module('starter.controllers', [])
         $state.go('app.home');
     }
 })
-.controller('homeCtrl', function($scope,$timeout,$ionicHistory) {
+.controller('homeCtrl', function($scope,$timeout,$ionicHistory,regService) {
 	$ionicHistory.nextViewOptions({
 		disableBack: true
 	});
 
-    $scope.current =        27;
-    $scope.max =            50;
-    $scope.offset =         0;
-    $scope.timerCurrent =   0;
-    $scope.uploadCurrent =  0;
-    $scope.stroke =         15;
-    $scope.radius =         125;
-    $scope.isSemi =         false;
-    $scope.rounded =        false;
-    $scope.responsive =     false;
-    $scope.clockwise =      true;
-    $scope.currentColor =   '#45ccce';
-    $scope.bgColor =        '#eaeaea';
-    $scope.duration =       800;
-    $scope.currentAnimation = 'easeOutCubic';
-    $scope.animationDelay = 0;
-
-    $scope.getStyle = function(){
-        var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
-
-        return {
-            'top': $scope.isSemi ? 'auto' : '50%',
-            'bottom': $scope.isSemi ? '5%' : 'auto',
-            'left': '50%',
-            'transform': transform,
-            '-moz-transform': transform,
-            '-webkit-transform': transform,
-            'font-size': $scope.radius/3.5 + 'px'
-        };
-    };
+    $scope.reg = regService.getInfo();
+    
+    
 })
 .controller('vehicleListCtrl', function($scope,$ionicPopup,$timeout,$state,$stateParams,$ionicHistory,VehicleService) {
 
@@ -111,14 +84,230 @@ angular.module('starter.controllers', [])
         PaymentService.remove(payment);
     }
 })
-.controller('parkingListCtrl', function($scope,$ionicPopup,$timeout,$state,$stateParams,$ionicHistory,ParkingService) {
-    $scope.parkings = ParkingService.all();
-    $scope.remove = function(parking) {
-        ParkingService.remove(parking);
+.controller('parkingListCtrl', function($scope,$ionicPopup,$timeout,$state,$stateParams,$ionicHistory,$http,ParkingService) {
+    $scope.gotohome = function(){
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('app.home');
     }
 
-    $scope.doRefresh = function(){
-       var temp_parkinglist = ParkingService.all();
-       $scope.$broadcast('scroll.refreshComplete');
+    $scope.gotoMap=function(){
+       $state.go('app.map'); 
+   }
+
+
+   $scope.parkings = ParkingService.all();
+   $scope.remove = function(parking) {
+    ParkingService.remove(parking);
+}
+
+$scope.doRefresh = function(){
+    {
+      parkingsArr2 = [];    
+      $http({
+        method: 'POST',
+        data:{'id':1},
+        dataType : 'application/x-www-form-urlencoded',
+        url: 'http://umbernet.com/get_parking_update.php'
+    }).then(function successCallback(response) {
+
+        for(i=0; i < response.data.length; i++){
+          var temp_p = {
+            'name': response.data[i].parking_name,
+            'id':response.data[i].id*1,
+            'policy':response.data[i].policy,
+            'max':(response.data[i].max*1), 
+            'current':(response.data[i].current*1),
+        };
+        if(temp_p.id !== 1){
+            temp_p.current = Math.floor((Math.random() * temp_p.max)); 
+        }
+        parkingsArr2.push(temp_p);
+        
     }
+
+    $scope.parkings = parkingsArr2;
+
+}, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+}) .finally(function() {
+       // Stop the ion-refresher from spinning
+       //$scope.$broadcast('scroll.refreshComplete');
+   });
+
+}
+}
 })
+.controller('MapCtrl', function($scope, $ionicLoading, $compile,$ionicHistory,$state,MapService,ParkingService) {
+    //http://www.mapcoordinates.net/en
+    $scope.gotohome = function(){
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('app.home');
+    };
+
+    $scope.doRefresh = function(){
+        init();
+    };
+
+    var init = function () {
+        markers_info = MapService.all();
+        
+// center the map on csun
+var myLatlng = new google.maps.LatLng(34.241594 , -118.528662);
+
+var mapOptions = {
+  center: myLatlng,
+  zoom: 15,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+var map = new google.maps.Map(document.getElementById("map"),mapOptions);
+
+
+        // adding markers
+        var markers_obj = [];
+        var position_obj =[];
+        var infowindow =[];
+        var c = ParkingService.all();
+        setTimeout(function(){
+            for(i=0; i < markers_info.length; i++){
+                position_obj[i] = new google.maps.LatLng(markers_info[i].Latitude , markers_info[i].Longitude);
+                addMarkerWithTimeout(position_obj[i], ((i+1)*200), markers_info[i].name, markers_info[i].icon,markers_info[i].id,c);
+                    //Marker + infowindow + angularjs compiled ng-click
+                }
+            }, 100);
+
+        function addMarkerWithTimeout(position, timeout, name, icon,id,c) {
+            window.setTimeout(function() {
+                var temp_marker = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                  title: name,
+                  icon: icon,
+                  animation: google.maps.Animation.DROP,
+              });
+                markers_obj.push(temp_marker);
+                var c = ParkingService.get(id);
+                var temp_infoWindow = new google.maps.InfoWindow({
+                  content: "Available: <b>"+c.current+"</b>"
+              });
+
+                infowindow.push(temp_infoWindow);
+
+                google.maps.event.addListener(temp_marker, 'click', function () {
+                  temp_infoWindow.open($scope.map, temp_marker);
+              });
+            }, timeout);
+
+        }
+
+        $scope.map = map;
+    }
+    init();
+
+
+
+    $scope.centerOnMe = function() {
+        if(!$scope.map) {
+          return;
+      }
+
+      $scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+      });
+
+      navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.loading.hide();
+      }, function(error) {
+          alert('Unable to get location: ' + error.message);
+      });
+  };
+
+  $scope.clickTest = function() {
+    alert('Example of infowindow with ng-click')
+};
+})
+.controller('registerCtrl', function($scope, $rootScope, $cordovaBarcodeScanner,$ionicHistory,$state, $ionicPlatform,regService,VehicleService,PaymentService) {
+    $scope.level_0=true;
+    $scope.level_1=false;
+    $scope.level_2=false;
+    $scope.level_3=false;
+
+    init = function(){
+        $scope.level_0=true;
+        $scope.level_1=false;
+        $scope.level_2=false;
+        $scope.level_3=false;
+        var val = regService.getInfo();
+        console.log(val);
+        $scope.selectedDuration = val.current;
+
+    }
+
+    init();
+
+    $scope.scanNow = function(){
+      $scope.level_0=false;
+      $scope.level_1=true;
+      $scope.level_2=false;
+      $scope.level_3=false;  
+  }
+
+  $scope.payments = PaymentService.all();
+  $scope.vehicles = VehicleService.all();
+  $scope.selectedCar = {};
+  $scope.selectedPayment = {};
+  $scope.selectedDuration = 0;
+  $scope.spot_id ="M1";
+  $scope.chooseCar = function (vehicle){
+    $scope.selectedCar = vehicle;
+    $scope.level_0=false;
+    $scope.level_1=false;
+    $scope.level_2=true;
+    $scope.level_3=false;
+}
+$scope.choosePayment = function(payment){
+    $scope.selectedPayment = payment;
+    $scope.level_0=false;
+    $scope.level_1=false;
+    $scope.level_2=false;
+    $scope.level_3=true;
+}
+
+$scope.finishRegister = function(val){
+    $scope.level_0=true;
+    $scope.level_1=false;
+    $scope.level_2=false;
+    $scope.level_3=false;
+
+    var newData = {start:0, end:val,current:val}
+    regService.setInfo(newData);
+    console.log(newData);
+    $ionicHistory.nextViewOptions({
+        disableBack: true
+    });
+    $state.go('app.home');
+}
+
+$scope.scanBarcode = function() {
+    scan();
+};
+
+function scan() {
+    var detachBarcodeScannerBackHandler = $ionicPlatform.registerBackButtonAction(function () {
+        detachBarcodeScannerBackHandler();
+        alert(cordova.plugins.barcodeScanner.Encode);
+    }, 1000);
+
+    $cordovaBarcodeScanner.scan().then(function(barcodeData) {
+        if (!barcodeData.cancelled) {
+            detachBarcodeScannerBackHandler();
+        }
+    }, function(error) { console.log(error); });
+}
+});

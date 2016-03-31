@@ -1,12 +1,8 @@
 <ion-view view-title="Parking Center" enable-menu-with-back-views="false">
 <ion-content padding="true">
-  <ion-refresher
-    pulling-text="Pull to refresh..."
-    on-refresh="doRefresh()">
-  </ion-refresher>
 <div class="list">
 	<ion-list>
-	<ion-item class="item-remove-animate item-icon-right" ng-repeat="parking in parkings track by $index" type="item-text-wrap" href="#/app/parking/">
+	<ion-item class="item-remove-animate item-icon-right" ng-repeat="parking in parkings track by parking.id" type="item-text-wrap">
 	    <just-gage id="{{parking.id}}" class="someClass" min=0 max=parking.max value=parking.current title="Parking {{parking.name}}"></just-gage>
 	<ion-option-button class="button-assertive" ng-click="remove(parking)">
 	Delete
@@ -15,4 +11,12 @@
 </div>
 
 </ion-content>
+    <ion-footer-bar align-title="left" class="bar-assertive">
+      <div class="button-bar">
+        <a class="button button-icon icon ion-home" ng-click="gotohome()"></a>
+        <a class="button button-icon icon ion-loop" ng-click="doRefresh()"></a>
+        <a class="button button-icon icon ion-map" ng-href="#/app/map"></a>
+      </div>
+    </ion-footer-bar>
+
 </ion-view>

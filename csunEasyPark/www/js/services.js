@@ -6,7 +6,7 @@ angular.module('starter.services', [])
   // Some fake testing data
   //http://www.iconsdb.com/soylent-red-icons/chevrolet-icon.html
   var vehicles = [    
-  { make: 'Chevrolet',vin:"1234567890", model: 'Cavalier',plate:'AB12CD5', img:'img/path936.png',year:'2003',id: 0 },
+  { make: 'Chevrolet',vin:"1234567890", model: 'Cavalier',plate:'AB12CD5', img:'img/chevrolet-256.png',year:'2003',id: 0 },
   
   ];
 
@@ -71,20 +71,19 @@ angular.module('starter.services', [])
 
   // Some fake testing data
   //http://www.iconsdb.com/soylent-red-icons/chevrolet-icon.html
-  var parkings = [];
-
+  
+var parkingsArr = [];
 
   return {
     all: function() {
-      console.log("all was called");
+      parkingsArr.length = 0
       $http({
         method: 'POST',
-        data:{'id':6},
+        data:{'id':1},
         dataType : 'application/x-www-form-urlencoded',
         url: 'http://umbernet.com/get_parking_update.php'
       }).then(function successCallback(response) {
         console.log(response);
-
         for(i=0; i < response.data.length; i++){
           var temp_p = {
             'name': response.data[i].parking_name,
@@ -96,11 +95,11 @@ angular.module('starter.services', [])
           if(temp_p.id !== 1){
             temp_p.current = Math.floor((Math.random() * temp_p.max)); 
           }
-          parkings.push(temp_p);
-        
+          parkingsArr.push(temp_p);
+
         }
 
-     
+
 
       }, function errorCallback(response) {
     // called asynchronously if an error occurs
@@ -109,24 +108,148 @@ angular.module('starter.services', [])
        // Stop the ion-refresher from spinning
        //$scope.$broadcast('scroll.refreshComplete');
      });
-      return parkings;
-    },
-    remove: function(parking) {
-      parkings.splice(parkings.indexOf(parking), 1);
-    },
-    get: function(parkingId) {
-      for (var i = 0; i < parkings.length; i++) {
-        if (parkings[i].id === parseInt(parkingId)) {
-          return parkings[i];
-        }
-      }
-      return null;
-    }, 
-    add: function(parkingInfo){
-      console.log(parkingInfo);
-      parkings.push(parkingInfo);
-      console.log(parkings);
-      return true;
-    },
+  return parkingsArr;
+},
+remove: function(parking) {
+  parkingsArr.splice(parkingsArr.indexOf(parking), 1);
+},
+get: function(parkingId) {
+  for (var i = 0; i < parkingsArr.length; i++) {
+    if (parkingsArr[i].id === parseInt(parkingId)) {
+      return parkingsArr[i];
+    }
   }
+  return null;
+}, 
+add: function(parkingInfo){
+  console.log(parkingInfo);
+  parkingsArr.push(parkingInfo);
+  console.log(parkingsArr);
+  return true;
+},
+}
 }])
+.factory('MapService', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  //http://www.iconsdb.com/soylent-red-icons/chevrolet-icon.html
+  var parkingLocations = [
+  
+    {
+    id : 1,
+    name:"Model",
+    Latitude:34.2374394,
+    Longitude:-118.5276854,
+    icon: 'img/model1.png'
+  },
+  {
+    id : 2,
+    name:"B1",
+    Latitude:34.23615835,
+    Longitude:-118.53354871,
+    icon: 'img/b1.png'
+  },
+  {
+    id : 3,
+    name:"B2",
+    Latitude:34.23683571,
+    Longitude:-118.53355944,
+    icon: 'img/b2.png'
+  },
+  {
+    id : 4,
+    name:"B3",
+    Latitude:34.23801952,
+    Longitude:-118.53361979,
+    icon: 'img/b3.png'
+  },
+  {
+    id : 5,
+    name:"B4",
+    Latitude:34.2400437,
+    Longitude:-118.53357822,
+    icon: 'img/b4.png'
+  },
+  {
+    id : 6,
+    name:"B5",
+    Latitude:34.24165236,
+    Longitude:-118.53365332,
+    icon: 'img/b5.png'
+  },
+  {
+    id : 7,
+    name:"B6",
+    Latitude:34.24291292,
+    Longitude:-118.53272796,
+    icon: 'img/b6.png'
+  },
+
+  {
+    id : 8,
+    name:"D6",
+    Latitude:34.24352124,
+    Longitude:-118.52903724,
+    icon: 'img/d6.png'
+  },
+
+
+  {
+    id : 9,
+    name:"E6",
+    Latitude:34.24371879,
+    Longitude:-118.52855444,
+    icon: 'img/e6.png'
+  },
+  {id : 10,
+    name:"F10",
+    Latitude:34.25091135,
+    Longitude:-118.52647305,
+    icon: 'img/f10.png'
+  },
+  {
+    id : 11,
+    name:"G3",
+    Latitude:34.2382288,
+    Longitude:-118.52395177,
+    icon: 'img/g3.png'
+  },
+
+  {
+    id : 12,
+    name:"G4",
+    Latitude:34.24067677,
+    Longitude:-118.52383375,
+    icon: 'img/g4.png'
+  }
+  ];
+
+
+  return {
+    all: function() {
+      return parkingLocations;
+    },
+    get: function(id) {
+  for (var i = 0; i < parkingLocations.length; i++) {
+    if (parkingLocations[i].id === parseInt(id)) {
+      return parkingLocations[i];
+    }
+  }
+  return null;
+},
+  }
+})
+.factory('regService', function() {
+  var registrationInfo ={start:0, end:0,current:0};
+    return {
+    setInfo: function(info) {
+      registrationInfo.start = info.start;
+      registrationInfo.end = info.end;
+      registrationInfo.current = info.current;
+    },
+    getInfo: function(){
+      return registrationInfo;
+    }
+  }
+});
